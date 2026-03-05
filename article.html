@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">文章详情 | AI情报站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', 'Noto Sans SC', sans-serif; }
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .tag-ai {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+            color: #93c5fd;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .tag-policy {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 146, 60, 0.2));
+            color: #fcd34d;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        .article-content {
+            line-height: 1.8;
+            color: #e2e8f0;
+        }
+        .article-content h2 {
+            color: #f8fafc;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        .article-content h3 {
+            color: #f1f5f9;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+        }
+        .article-content p {
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+        .article-content a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin: 0.5rem 0;
+            color: #cbd5e1;
+        }
+        .article-content blockquote {
+            border-left: 4px solid #3b82f6;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: #94a3b8;
+            font-style: italic;
+        }
+        .glow-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.5), transparent);
+        }
+    </style>
+</head>
+<body class="text-slate-200">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/5">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+                        AI
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold gradient-text">情报站</h1>
+                        <p class="text-xs text-slate-500">返回首页</p>
+                    </div>
+                </a>
+                <a href="index.html" class="text-slate-400 hover:text-white transition-colors flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    返回列表
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+            <!-- Article Header -->
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <span id="article-tags" class="flex gap-2">
+                        <!-- Tags will be inserted here -->
+                    </span>
+                    <span id="article-time" class="text-sm text-slate-500"></span>
+                </div>
+                <h1 id="article-title" class="text-3xl sm:text-4xl font-bold text-white mb-4 leading-tight">
+                    <!-- Title will be inserted here -->
+                </h1>
+                <div class="flex items-center gap-4 text-sm text-slate-400">
+                    <span id="article-source" class="flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                        </svg>
+                        <span id="source-name"><!-- Source name --></span>
+                    </span>
+                    <span id="article-views" class="flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                        <span id="view-count">1,234</span> 阅读
+                    </span>
+                </div>
+            </div>
+
+            <div class="glow-line mb-8"></div>
+
+            <!-- Article Content -->
+            <article id="article-body" class="article-content glass-card rounded-2xl p-8 mb-8">
+                <!-- Content will be inserted here -->
+            </article>
+
+            <!-- Action Buttons -->
+            <div class="glass-card rounded-2xl p-6 mb-8">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="text-slate-400 text-sm">
+                        觉得这篇文章有价值？分享给更多人
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <a id="original-link" href="#" target="_blank" class="px-6 py-2.5 rounded-xl bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 transition-colors flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
+                            查看原文
+                        </a>
+                        <button onclick="shareArticle()" class="px-6 py-2.5 rounded-xl bg-white/5 text-slate-300 hover:bg-white/10 transition-colors flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                            </svg>
+                            分享
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Articles -->
+            <div id="related-section" class="hidden">
+                <h3 class="text-xl font-bold text-white mb-4">相关情报</h3>
+                <div id="related-articles" class="space-y-4">
+                    <!-- Related articles will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-8">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <p class="text-slate-500 text-sm">
+                AI情报站 · 自动聚合全球AI动态与教育资讯
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Article database (in a real implementation, this would be loaded from a JSON file)
+        const articles = {
+            "openai-pentagon": {
+                title: "OpenAI与五角大楼达成合作，允许美军在机密环境使用AI技术",
+                source: "MIT Technology Review",
+                time: "3小时前",
+                tags: [{name: "AI动态", class: "tag-ai"}, {name: "政策", class: "tag-policy"}],
+                content: `
+                    <p>OpenAI CEO Sam Altman于2月28日宣布与美军达成协议，将允许军方在机密环境中使用OpenAI技术。这一决定标志着OpenAI政策的重大转变，此前该公司一直限制其技术用于军事目的。</p>
+                    
+                    <h2>合作内容</h2>
+                    <p>根据协议，美国军方将能够在机密网络中使用OpenAI的AI模型，用于：</p>
+                    <ul>
+                        <li>情报分析和处理</li>
+                        <li>网络安全防御</li>
+                        <li>行政和后勤自动化</li>
+                        <li>非战斗军事任务支持</li>
+                    </ul>
+                    
+                    <h2>争议与担忧</h2>
+                    <p>这一合作引发了AI安全领域的广泛讨论。Anthropic此前曾明确拒绝与军方合作，OpenAI此举被视为对AI军事化趋势的妥协。</p>
+                    
+                    <blockquote>
+                        "我们需要在AI发展和国家安全之间找到平衡，但军事化应用确实令人担忧。" — AI伦理专家
+                    </blockquote>
+                    
+                    <h2>对教育领域的启示</h2>
+                    <p>这一事件提醒我们：</p>
+                    <ul>
+                        <li>AI技术正在快速进入敏感领域</li>
+                        <li>AI伦理教育的重要性日益凸显</li>
+                        <li>未来AI人才需要具备更强的伦理判断能力</li>
+                    </ul>
+                    
+                    <p>作为升学规划师，建议关注AI伦理、科技政策等相关课程和竞赛，这可能是未来的重要方向。</p>
+                `,
+                originalUrl: "https://www.technologyreview.com/2026/03/02/1133850/",
+                views: "1,234"
+            },
+            "anti-ai-protest": {
+                title: "伦敦爆发大规模反AI抗议活动，数百人游行反对AI技术滥用",
+                source: "MIT Technology Review",
+                time: "5小时前",
+                tags: [{name: "AI动态", class: "tag-ai"}],
+                content: `
+                    <p>"Pull the plug! Stop the slop!" 数百名抗议者周六在伦敦国王十字科技区游行，这是迄今为止规模最大的反AI抗议活动之一。</p>
+                    
+                    <h2>抗议诉求</h2>
+                    <p>示威者要求：</p>
+                    <ul>
+                        <li>暂停开发比GPT-4更强大的AI系统</li>
+                        <li>建立更严格的AI监管框架</li>
+                        <li>保护创作者权益，防止AI滥用版权内容</li>
+                        <li>确保AI发展不会加剧社会不平等</li>
+                    </ul>
+                    
+                    <h2>背景分析</h2>
+                    <p>此次抗议反映了公众对AI快速发展的普遍焦虑，特别是在：</p>
+                    <ul>
+                        <li>就业替代风险</li>
+                        <li>隐私和数据安全</li>
+                        <li>虚假信息传播</li>
+                        <li>创作者经济受损</li>
+                    </ul>
+                    
+                    <h2>思考</h2>
+                    <p>这种社会情绪可能会影响AI相关政策制定，建议关注AI与社会、AI伦理等交叉学科的发展。</p>
+                `,
+                originalUrl: "https://www.technologyreview.com/2026/03/02/1133814/",
+                views: "987"
+            },
+            "collectiviq": {
+                title: "CollectivIQ：同时调用10+AI模型提供众包答案",
+                source: "TechCrunch",
+                time: "8小时前",
+                tags: [{name: "产品", class: "tag-ai"}],
+                content: `
+                    <p>这家初创公司的解决方案是同时展示ChatGPT、Gemini、Claude、Grok等10多个模型的回答，让用户对比选择最准确的答案。</p>
+                    
+                    <h2>工作原理</h2>
+                    <p>CollectivIQ的核心创新在于：</p>
+                    <ul>
+                        <li><strong>多模型并行</strong>：同时向多个AI模型发送相同问题</li>
+                        <li><strong>答案对比</strong>：并排显示各模型的回答</li>
+                        <li><strong>社区投票</strong>：用户可对答案质量进行评分</li>
+                        <li><strong>可信度排名</strong>：根据历史表现对模型进行排名</li>
+                    </ul>
+                    
+                    <h2>教育应用场景</h2>
+                    <p>这一工具对教育和研究有重要价值：</p>
+                    <ul>
+                        <li>学生可以通过对比不同AI的回答，培养批判性思维</li>
+                        <li>研究人员可以快速验证信息的准确性</li>
+                        <li>教师可以用它来展示AI的局限性和偏见</li>
+                    </ul>
+                    
+                    <blockquote>
+                        "与其相信一个AI，不如对比多个AI，培养独立思考能力。"
+                    </blockquote>
+                    
+                    <h2>工具推荐</h2>
+                    <p>类似的工具还有：</p>
+                    <ul>
+                        <li>ChatHub - 同时对比多个AI对话</li>
+                        <li>POE - 聚合多个AI模型</li>
+                        <li>Perplexity - 带引用的AI搜索</li>
+                    </ul>
+                `,
+                originalUrl: "https://techcrunch.com/2026/03/04/",
+                views: "756"
+            },
+            "ai-harassment": {
+                title: "网络骚扰进入AI时代：AI代理成为开源项目的新威胁",
+                source: "MIT Technology Review",
+                time: "12小时前",
+                tags: [{name: "安全", class: "tag-policy"}],
+                content: `
+                    <p>matplotlib维护者Scott Shambaugh拒绝了AI代理的代码贡献请求。像许多开源项目一样，matplotlib正面临AI代理试图参与项目的挑战。</p>
+                    
+                    <h2>新型骚扰方式</h2>
+                    <p>AI代理带来的问题包括：</p>
+                    <ul>
+                        <li>自动提交低质量代码</li>
+                        <li>虚假的贡献者身份</li>
+                        <li>垃圾评论和Issue</li>
+                        <li>消耗维护者的时间和精力</li>
+                    </ul>
+                    
+                    <h2>开源社区的困境</h2>
+                    <p>开源项目维护者面临两难：</p>
+                    <ul>
+                        <li>欢迎新贡献者 vs 防范AI滥用</li>
+                        <li>保持开放 vs 增加审核成本</li>
+                        <li>社区增长 vs 质量控制</li>
+                    </ul>
+                    
+                    <h2>对教育的启示</h2>
+                    <p>这一现象提醒我们：</p>
+                    <ul>
+                        <li>AI带来的不仅是便利，还有新的社会问题</li>
+                        <li>数字素养教育需要包含AI伦理内容</li>
+                        <li>培养学生的批判性思维和辨别能力更加重要</li>
+                    </ul>
+                `,
+                originalUrl: "https://www.technologyreview.com/2026/03/05/1133962/",
+                views: "543"
+            }
+        };
+
+        // Get article ID from URL
+        function getArticleId() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id') || 'openai-pentagon';
+        }
+
+        // Load article content
+        function loadArticle() {
+            const articleId = getArticleId();
+            const article = articles[articleId];
+            
+            if (!article) {
+                document.getElementById('article-body').innerHTML = '<p class="text-center text-slate-500">文章不存在</p>';
+                return;
+            }
+
+            // Set title
+            document.title = article.title + ' | AI情报站';
+            document.getElementById('article-title').textContent = article.title;
+            
+            // Set tags
+            const tagsContainer = document.getElementById('article-tags');
+            tagsContainer.innerHTML = article.tags.map(tag => 
+                `<span class="${tag.class} px-3 py-1 rounded-full text-xs font-medium">${tag.name}</span>`
+            ).join('');
+            
+            // Set metadata
+            document.getElementById('article-time').textContent = article.time;
+            document.getElementById('source-name').textContent = article.source;
+            document.getElementById('view-count').textContent = article.views;
+            
+            // Set content
+            document.getElementById('article-body').innerHTML = article.content;
+            
+            // Set original link
+            document.getElementById('original-link').href = article.originalUrl;
+            
+            // Show related articles
+            showRelatedArticles(articleId);
+        }
+
+        // Show related articles
+        function showRelatedArticles(currentId) {
+            const relatedSection = document.getElementById('related-section');
+            const relatedContainer = document.getElementById('related-articles');
+            
+            const relatedIds = Object.keys(articles).filter(id => id !== currentId).slice(0, 3);
+            
+            if (relatedIds.length > 0) {
+                relatedSection.classList.remove('hidden');
+                relatedContainer.innerHTML = relatedIds.map(id => {
+                    const article = articles[id];
+                    return `
+                        <a href="article.html?id=${id}" class="glass-card rounded-xl p-4 hover:bg-white/5 transition-colors block">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="tag-ai px-2 py-0.5 rounded-full text-xs">${article.tags[0].name}</span>
+                                <span class="text-xs text-slate-500">${article.time}</span>
+                            </div>
+                            <h4 class="font-medium text-white mb-2 line-clamp-2">${article.title}</h4>
+                            <p class="text-sm text-slate-400 line-clamp-2">${article.content.replace(/<[^>]*>/g, '').substring(0, 100)}...</p>
+                        </a>
+                    `;
+                }).join('');
+            }
+        }
+
+        // Share article
+        function shareArticle() {
+            const url = window.location.href;
+            const title = document.getElementById('article-title').textContent;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    url: url
+                });
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('链接已复制到剪贴板');
+                });
+            }
+        }
+
+        // Load article on page load
+        document.addEventListener('DOMContentLoaded', loadArticle);
+    </script>
+</body>
+</html>
